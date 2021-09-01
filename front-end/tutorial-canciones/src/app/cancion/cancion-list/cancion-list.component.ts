@@ -24,6 +24,7 @@ export class CancionListComponent implements OnInit {
   mostrarCanciones: Array<Cancion>
   cancionSeleccionada: Cancion
   indiceSeleccionado: number = 0
+  processing_favorite: boolean = false
 
   ngOnInit() {
     if(!parseInt(this.router.snapshot.params.userId) || this.router.snapshot.params.userToken === " "){
@@ -55,7 +56,7 @@ export class CancionListComponent implements OnInit {
     error => {
       this.showError(`Ha ocurrido un error: ${error.message}`)
     })
-    
+
   }
 
   buscarCancion(busqueda: string){
@@ -66,6 +67,25 @@ export class CancionListComponent implements OnInit {
       }
     })
     this.mostrarCanciones = cancionesBusqueda
+  }
+
+  changeFavorite() {
+    if(this.processing_favorite) {
+      return
+    }
+
+    this.processing_favorite = true
+    this.cancionService.changeFavoriteState(this.cancionSeleccionada.id)
+      .subscribe(cancion => {
+        this.processing_favorite = false
+        this.ngOnInit()
+        let message = cancion.es_favorita ? "La canción fue agregada a tus favoritos" : "La canción fue eliminada de tus favoritos"
+        this.toastr.success(message);
+      },
+      error=> {
+        this.showError("Ha ocurrido un error. " + error.message)
+      })
+
   }
 
   eliminarCancion(){
