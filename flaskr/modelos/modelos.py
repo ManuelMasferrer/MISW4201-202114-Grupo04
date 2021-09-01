@@ -15,6 +15,7 @@ class Cancion(db.Model):
     titulo = db.Column(db.String(128))
     minutos = db.Column(db.Integer)
     segundos = db.Column(db.Integer)
+    es_favorita = db.Column(db.Boolean, default = False)
     interprete = db.Column(db.String(128))
     albumes = db.relationship('Album', secondary = 'album_cancion', back_populates="canciones")
 
