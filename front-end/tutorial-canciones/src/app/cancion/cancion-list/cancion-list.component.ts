@@ -100,7 +100,7 @@ export class CancionListComponent implements OnInit {
     this.toastr.success(`La canción fue eliminada`, "Eliminada exitosamente");
   }
 
-  radioChageHandler(event:any){
+  radioChangeHandler(event:any){
     this.selectedFilter=event.target.value;
   }
 
