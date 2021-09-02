@@ -11,3 +11,7 @@
 .selected{
   background-color: #ececec;
 }
+
+.form-check-label{
+  text-transform: capitalize;
+}

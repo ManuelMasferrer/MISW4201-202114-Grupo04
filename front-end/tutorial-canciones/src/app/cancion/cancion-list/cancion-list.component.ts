@@ -24,6 +24,8 @@ export class CancionListComponent implements OnInit {
   mostrarCanciones: Array<Cancion>
   cancionSeleccionada: Cancion
   indiceSeleccionado: number = 0
+  selectedFilter:string='titulo';
+
 
   ngOnInit() {
     if(!parseInt(this.router.snapshot.params.userId) || this.router.snapshot.params.userToken === " "){
@@ -55,14 +57,21 @@ export class CancionListComponent implements OnInit {
     error => {
       this.showError(`Ha ocurrido un error: ${error.message}`)
     })
-    
+
   }
 
-  buscarCancion(busqueda: string){
+  buscarCancion(busqueda: string, filter=this.selectedFilter){
     let cancionesBusqueda: Array<Cancion> = []
     this.canciones.map( cancion => {
-      if(cancion.titulo.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())){
-        cancionesBusqueda.push(cancion)
+      if (filter==='interprete'){
+        if(cancion.interprete.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())){
+          cancionesBusqueda.push(cancion)
+        }
+      }
+      else{
+        if(cancion.titulo.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())){
+          cancionesBusqueda.push(cancion)
+        }
       }
     })
     this.mostrarCanciones = cancionesBusqueda
@@ -89,6 +98,10 @@ export class CancionListComponent implements OnInit {
 
   showSuccess() {
     this.toastr.success(`La canción fue eliminada`, "Eliminada exitosamente");
+  }
+
+  radioChageHandler(event:any){
+    this.selectedFilter=event.target.value;
   }
 
 }
