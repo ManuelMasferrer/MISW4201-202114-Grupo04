@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Cancion } from '../cancion';
+import { Cancion, Genero } from '../cancion';
 import { CancionService } from '../cancion.service';
+
 
 @Component({
   selector: 'app-cancion-create',
@@ -15,6 +16,28 @@ export class CancionCreateComponent implements OnInit {
   userId: number
   token: string
   cancionForm: FormGroup
+  generos:Array<Genero> = [
+    {
+      llave: "BACHATA",
+      valor: 1
+    },
+    {
+      llave: "BALADAS",
+      valor: 2
+    },
+    {
+      llave: "BANDA",
+      valor: 3
+    },
+    {
+      llave: "BLUES",
+      valor: 4
+    },
+    {
+      llave: "BOLERO",
+      valor: 5
+    }
+  ]
 
   constructor(
     private cancionService: CancionService,
@@ -35,7 +58,8 @@ export class CancionCreateComponent implements OnInit {
         titulo: ["", [Validators.required, Validators.maxLength(128)]],
         minutos: ["", [Validators.required, Validators.pattern("^[0-9]*$"), Validators.maxLength(2)]],
         segundos: ["", [Validators.required, Validators.pattern("^[0-9]*$"), Validators.maxLength(2)]],
-        interprete: ["", [Validators.required, Validators.maxLength(128)]]
+        interprete: ["", [Validators.required, Validators.maxLength(128)]],
+        genero: ["", [Validators.required]]
       })
     }
   }

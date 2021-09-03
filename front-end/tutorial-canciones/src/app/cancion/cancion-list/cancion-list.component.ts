@@ -102,6 +102,7 @@ export class CancionListComponent implements OnInit {
 
   radioChangeHandler(event:any){
     this.selectedFilter=event.target.value;
+    console.log(this.selectedFilter)
   }
 
 }
