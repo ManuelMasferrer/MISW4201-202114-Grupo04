@@ -106,7 +106,7 @@
             </div>
             <div class="row justify-content-center">
               <div class="col-8">
-                <div class="alert alert-danger my-3" *ngIf="cancionForm.get('genero')?.hasError('required') && cancionForm.get('medio')?.touched">
+                <div class="alert alert-danger my-3" *ngIf="cancionForm.get('genero')?.hasError('required') && cancionForm.get('genero')?.touched">
                   Debe seleccionar el genero de la canción
                 </div>
               </div>

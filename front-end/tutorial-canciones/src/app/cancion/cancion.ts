@@ -5,7 +5,7 @@ export class Cancion {
     segundos: number;
     interprete: string;
     albumes: Array<any>;
-    genero?: Genero
+    genero: Genero
 
     constructor(
         id: number,
@@ -14,7 +14,7 @@ export class Cancion {
         segundos: number,
         interprete: string,
         albumes: Array<any>,
-        genero?: Genero
+        genero: Genero
     ){
         this.id = id,
         this.titulo = titulo,

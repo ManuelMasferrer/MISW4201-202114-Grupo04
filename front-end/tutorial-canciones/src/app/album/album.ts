@@ -8,7 +8,7 @@ export class Album {
     usuario: number;
     interpretes: Array<string>;
     canciones: Array<Cancion>;
-    genero?: Genero;
+    genero: Genero;
 
 
     constructor(
@@ -20,7 +20,7 @@ export class Album {
         usuario: number,
         interpretes: Array<string>,
         canciones: Array<Cancion>,
-        genero?: Genero
+        genero: Genero
     ){
         this.id = id,
         this.titulo = titulo,

@@ -94,7 +94,7 @@
             </div>
             <div class="row justify-content-center">
               <div class="col-8">
-                <div class="alert alert-danger my-3" *ngIf="albumForm.get('genero')?.hasError('required') && albumForm.get('medio')?.touched">
+                <div class="alert alert-danger my-3" *ngIf="albumForm.get('genero')?.hasError('required') && albumForm.get('genero')?.touched">
                   Debe seleccionar el genero del álbum
                 </div>
               </div>

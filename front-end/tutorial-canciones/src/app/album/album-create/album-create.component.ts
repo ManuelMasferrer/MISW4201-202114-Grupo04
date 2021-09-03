@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AlbumService } from '../album.service';
 import { Album, Medio, Genero } from '../album';
+import { bindCallback } from 'rxjs';
 
 @Component({
   selector: 'app-album-create',
@@ -75,7 +76,7 @@ export class AlbumCreateComponent implements OnInit {
         anio: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
         descripcion: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(512)]],
         medio: ["", [Validators.required]],
-        genero: ["", [Validators.required]]
+        genero: ["", [Validators.required]],
       })
     }
   }
@@ -98,6 +99,9 @@ export class AlbumCreateComponent implements OnInit {
   }
 
   createAlbum(newAlbum: Album){
+    console.log(this.albumForm.value.genero)
+    console.log(this.albumForm.value.medio)
+
     this.albumForm.get('anio')?.setValue(parseInt(this.albumForm.get('anio')?.value))
     this.albumService.crearAlbum(this.userId, this.token, newAlbum)
     .subscribe(album => {

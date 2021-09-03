@@ -57,6 +57,7 @@ class EnumADiccionario(fields.Field):
         return {"llave": value.name, "valor": value.value}
 
 class CancionSchema(SQLAlchemyAutoSchema):
+    genero = EnumADiccionario(attribute=("genero"))
     class Meta:
          model = Cancion
          include_relationships = True
@@ -64,6 +65,7 @@ class CancionSchema(SQLAlchemyAutoSchema):
 
 class AlbumSchema(SQLAlchemyAutoSchema):
     medio = EnumADiccionario(attribute=("medio"))
+    genero = EnumADiccionario(attribute=("genero"))
     class Meta:
          model = Album
          include_relationships = True
