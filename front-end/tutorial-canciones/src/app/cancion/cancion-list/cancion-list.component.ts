@@ -79,7 +79,7 @@ export class CancionListComponent implements OnInit {
       .subscribe(cancion => {
         this.processing_favorite = false
         this.ngOnInit()
-        let message = cancion.es_favorita ? "La canción fue agregada a tus favoritos" : "La canción fue eliminada de tus favoritos"
+        let message = cancion.es_favorita ? `La canción '${cancion.titulo}' fue agregada a tus favoritos` : `La canción '${cancion.titulo}' fue eliminada de tus favoritos`
         this.toastr.success(message);
       },
       error=> {
@@ -110,5 +110,4 @@ export class CancionListComponent implements OnInit {
   showSuccess() {
     this.toastr.success(`La canción fue eliminada`, "Eliminada exitosamente");
   }
-
 }
