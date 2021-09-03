@@ -17,13 +17,15 @@ export class AlbumListComponent implements OnInit {
     private toastr: ToastrService,
     private routerPath: Router
   ) { }
-  
+
   userId: number
   token: string
   albumes: Array<Album>
   mostrarAlbumes: Array<Album>
   albumSeleccionado: Album
   indiceSeleccionado: number
+  selectedFilter:string='titulo';
+
 
   ngOnInit() {
     if(!parseInt(this.router.snapshot.params.userId) || this.router.snapshot.params.userToken === " "){
@@ -57,7 +59,7 @@ export class AlbumListComponent implements OnInit {
         this.showError("Ha ocurrido un error. " + error.message)
       }
     })
-    
+
   }
 
   onSelect(a: Album, index: number){
@@ -83,11 +85,18 @@ export class AlbumListComponent implements OnInit {
     return interpretes
   }
 
-  buscarAlbum(busqueda: string){
+  buscarAlbum(busqueda: string, filter = this.selectedFilter){
     let albumesBusqueda: Array<Album> = []
     this.albumes.map( albu => {
-      if( albu.titulo.toLocaleLowerCase().includes(busqueda.toLowerCase())){
-        albumesBusqueda.push(albu)
+      if (filter==='genero'){
+        if(albu.genero.llave.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())){
+          albumesBusqueda.push(albu)
+        }
+      }
+      else{
+        if(albu.titulo.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())){
+          albumesBusqueda.push(albu)
+        }
       }
     })
     this.mostrarAlbumes = albumesBusqueda
@@ -128,4 +137,11 @@ export class AlbumListComponent implements OnInit {
   showSuccess() {
     this.toastr.success(`El album fue eliminado`, "Eliminado exitosamente");
   }
+
+
+  radioChangeHandler(event:any){
+    this.selectedFilter=event.target.value;
+    console.log(this.selectedFilter)
+  }
+
 }

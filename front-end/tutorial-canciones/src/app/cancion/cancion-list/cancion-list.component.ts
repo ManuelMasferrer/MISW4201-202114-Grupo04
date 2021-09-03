@@ -60,11 +60,16 @@ export class CancionListComponent implements OnInit {
 
   }
 
-  buscarCancion(busqueda: string, filter=this.selectedFilter){
+  buscarCancion(busqueda: string, filter = this.selectedFilter){
     let cancionesBusqueda: Array<Cancion> = []
     this.canciones.map( cancion => {
       if (filter==='interprete'){
         if(cancion.interprete.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())){
+          cancionesBusqueda.push(cancion)
+        }
+      }
+      if (filter==='genero'){
+        if(cancion.genero.llave.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())){
           cancionesBusqueda.push(cancion)
         }
       }
