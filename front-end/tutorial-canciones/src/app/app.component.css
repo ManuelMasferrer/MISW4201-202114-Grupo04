@@ -1,0 +1,9 @@
+:host ::ng-deep img.logo {
+  height: 30px;
+}
+
+:host ::ng-deep .cursor-pointer {
+  cursor: pointer;
+}
+
+
