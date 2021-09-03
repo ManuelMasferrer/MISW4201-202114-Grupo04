@@ -1,6 +1,6 @@
 from flaskr import create_app
 from flask_restful import Api
-from .modelos import db
+from .modelos import db, Cancion
 from .vistas import VistaCanciones, VistaCancion, VistaSignIn, VistaAlbum, VistaAlbumsUsuario, VistaCancionesAlbum, VistaLogIn, VistaAlbumesCanciones, VistaCancionCambiarFavorito
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS, cross_origin
