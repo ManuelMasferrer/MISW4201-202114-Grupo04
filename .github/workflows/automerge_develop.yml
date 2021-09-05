@@ -28,7 +28,7 @@ jobs:
         pip install -r flaskr/requirements.txt
     - name: Correr pruebas
       id: correr-pruebas
-      run: cd flaskr && python -m unittest -v tests/test_*
+      run: cd flaskr && pytest
   automerge:
     name: Automerge
     needs: job1
