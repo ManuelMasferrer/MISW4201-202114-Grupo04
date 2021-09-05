@@ -75,7 +75,7 @@ export class CancionListComponent implements OnInit {
           cancionesBusqueda.push(cancion)
         }
       }
-      if(filter ==='titulo'){
+      else{
         if(cancion.titulo?.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())){
           cancionesBusqueda.push(cancion)
         }

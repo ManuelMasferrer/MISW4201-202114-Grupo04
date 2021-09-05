@@ -114,17 +114,35 @@ export class AlbumListComponent implements OnInit {
     return generos
   }
 
+  hasInterprete(albu:Album, busqueda:string):Boolean{
+    let resp:boolean = false;
+    let interpreteString:string = albu.interpretes?.join(' ') || "";
+      if(interpreteString.toLocaleLowerCase().includes(busqueda.toLowerCase())){
+        resp=true
+      }
+      return resp
+  }
+
+  hasGenero(albu:Album, busqueda:string):Boolean{
+    let resp:boolean = false;
+    let interpreteString:string = albu.generos?.join(' ') || "";
+      if(interpreteString.toLocaleLowerCase().includes(busqueda.toLowerCase())){
+        resp=true
+      }
+      return resp
+  }
+
   buscarAlbum(busqueda: string, filter = this.selectedFilter){
 
     let albumesBusqueda: Array<Album> = []
     this.albumes.map( albu => {
       if (filter==='genero'){
-        if(albu.generos.includes(busqueda.toLocaleUpperCase())){
+        if(this.hasGenero(albu,busqueda)){
           albumesBusqueda.push(albu)
         }
       }
       if (filter==='interprete'){
-        if(albu.interpretes.includes(busqueda.toLocaleLowerCase())){
+        if(this.hasInterprete(albu,busqueda)){
           albumesBusqueda.push(albu)
         }
       }
@@ -135,7 +153,7 @@ export class AlbumListComponent implements OnInit {
         }
       }
     })
-    this.mostrarAlbumes = albumesBusqueda
+    this.mostrarAlbumes = albumesBusqueda.sort((a,b) => (a.titulo > b.titulo) ? 1 : ((b.titulo > a.titulo) ? -1 : 0))
   }
 
   irCrearAlbum(){
