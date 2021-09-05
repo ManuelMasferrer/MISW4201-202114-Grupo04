@@ -76,7 +76,6 @@ export class AlbumCreateComponent implements OnInit {
         anio: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
         descripcion: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(512)]],
         medio: ["", [Validators.required]],
-        genero: ["", [Validators.required]],
       })
     }
   }

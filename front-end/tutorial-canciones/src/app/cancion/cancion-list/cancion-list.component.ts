@@ -41,9 +41,11 @@ export class CancionListComponent implements OnInit {
   getCanciones():void{
     this.cancionService.getCanciones()
     .subscribe(canciones => {
+      // if(canciones.length > 0){
       this.canciones = canciones
       this.mostrarCanciones = canciones
       this.onSelect(this.mostrarCanciones[0], 0)
+    // }
     })
   }
 
@@ -64,17 +66,17 @@ export class CancionListComponent implements OnInit {
     let cancionesBusqueda: Array<Cancion> = []
     this.canciones.map( cancion => {
       if (filter==='interprete'){
-        if(cancion.interprete.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())){
+        if(cancion.interprete?.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())){
           cancionesBusqueda.push(cancion)
         }
       }
       if (filter==='genero'){
-        if(cancion.genero.llave.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())){
+        if(cancion.genero.llave?.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())){
           cancionesBusqueda.push(cancion)
         }
       }
-      else{
-        if(cancion.titulo.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())){
+      if(filter ==='titulo'){
+        if(cancion.titulo?.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())){
           cancionesBusqueda.push(cancion)
         }
       }

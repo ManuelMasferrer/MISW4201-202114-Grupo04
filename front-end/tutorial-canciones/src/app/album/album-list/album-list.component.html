@@ -41,13 +41,11 @@
 
 
 
-          <table class="table table-hover mb-0" aria-describedby="colecName">
+          <table class="table table-hover mb-0 mt-4" aria-describedby="colecName">
             <tbody>
                 <tr *ngFor="let album of mostrarAlbumes; index as i" (click)="onSelect(album, i)" [ngClass]="{'selected': i === indiceSeleccionado}">
                   <td >{{album.titulo}}</td>
                   <td >{{album.anio}}</td>
-                  <td >{{album.genero.llave}}</td>
-
                 </tr>
             </tbody>
           </table>

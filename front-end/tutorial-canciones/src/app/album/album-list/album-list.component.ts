@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from "ngx-toastr";
-import { Album, Cancion } from '../album';
+import { Album, Cancion, Genero } from '../album';
 import { AlbumService } from '../album.service';
 
 @Component({
@@ -27,6 +27,7 @@ export class AlbumListComponent implements OnInit {
   selectedFilter:string='titulo';
 
 
+
   ngOnInit() {
     if(!parseInt(this.router.snapshot.params.userId) || this.router.snapshot.params.userToken === " "){
       this.showError("No hemos podido identificarlo, por favor vuelva a iniciar sesión.")
@@ -36,6 +37,9 @@ export class AlbumListComponent implements OnInit {
       this.token = this.router.snapshot.params.userToken
       this.getAlbumes();
     }
+
+
+
   }
 
   getAlbumes():void{
@@ -44,7 +48,20 @@ export class AlbumListComponent implements OnInit {
       this.albumes = albumes
       this.mostrarAlbumes = albumes
       if(albumes.length>0){
+        this.mostrarAlbumes.map((currentElement, index) => {
+          this.albumService.getCancionesAlbum(index+1,this.token).subscribe(canciones => {
+            currentElement.canciones = canciones
+            currentElement.interpretes = this.getInterpretes(canciones)
+            currentElement.generos = this.getGeneros(canciones)
+
+          })
+
+        })
+        console.log(this.mostrarAlbumes)
+        console.log(this.albumes)
         this.onSelect(this.mostrarAlbumes[0], 0)
+        console.log(this.mostrarAlbumes[0])
+
       }
     },
     error => {
@@ -69,6 +86,8 @@ export class AlbumListComponent implements OnInit {
     .subscribe(canciones => {
       this.albumSeleccionado.canciones = canciones
       this.albumSeleccionado.interpretes = this.getInterpretes(canciones)
+      this.albumSeleccionado.generos = this.getGeneros(canciones)
+      console.log(this.albumSeleccionado.generos)
     },
     error =>{
       this.showError("Ha ocurrido un error, " + error.message)
@@ -85,14 +104,31 @@ export class AlbumListComponent implements OnInit {
     return interpretes
   }
 
+  getGeneros(canciones: Array<any>): Array<string>{
+    var generos: Array<string> = []
+    canciones.map( c => {
+      if(!generos.includes(c.genero.llave)){
+        generos.push(c.genero.llave)
+      }
+    })
+    return generos
+  }
+
   buscarAlbum(busqueda: string, filter = this.selectedFilter){
+
     let albumesBusqueda: Array<Album> = []
     this.albumes.map( albu => {
       if (filter==='genero'){
-        if(albu.genero.llave.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())){
+        if(albu.generos.includes(busqueda.toLocaleUpperCase())){
           albumesBusqueda.push(albu)
         }
       }
+      if (filter==='interprete'){
+        if(albu.interpretes.includes(busqueda.toLocaleLowerCase())){
+          albumesBusqueda.push(albu)
+        }
+      }
+
       else{
         if(albu.titulo.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())){
           albumesBusqueda.push(albu)
@@ -142,6 +178,7 @@ export class AlbumListComponent implements OnInit {
   radioChangeHandler(event:any){
     this.selectedFilter=event.target.value;
     console.log(this.selectedFilter)
+
   }
 
 }

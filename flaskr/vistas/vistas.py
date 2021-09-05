@@ -83,7 +83,7 @@ class VistaAlbumsUsuario(Resource):
 
     @jwt_required()
     def post(self, id_usuario):
-        nuevo_album = Album(titulo=request.json["titulo"], anio=request.json["anio"], descripcion=request.json["descripcion"], medio=request.json["medio"], genero=request.json["genero"])
+        nuevo_album = Album(titulo=request.json["titulo"], anio=request.json["anio"], descripcion=request.json["descripcion"], medio=request.json["medio"])
         usuario = Usuario.query.get_or_404(id_usuario)
         usuario.albumes.append(nuevo_album)
 
@@ -114,7 +114,7 @@ class VistaCancionesAlbum(Resource):
             else:
                 return 'Canción errónea',404
         else: 
-            nueva_cancion = Cancion(titulo=request.json["titulo"], minutos=request.json["minutos"], segundos=request.json["segundos"], interprete=request.json["interprete"],  genero=request.json["genero"])
+            nueva_cancion = Cancion(titulo=request.json["titulo"], minutos=request.json["minutos"], segundos=request.json["segundos"], interprete=request.json["interprete"], genero=request.json["genero"])
             album.canciones.append(nueva_cancion)
         db.session.commit()
         return cancion_schema.dump(nueva_cancion)
@@ -134,7 +134,6 @@ class VistaAlbum(Resource):
         album.anio = request.json.get("anio", album.anio)
         album.descripcion = request.json.get("descripcion", album.descripcion)
         album.medio = request.json.get("medio", album.medio)
-        album.medio = request.json.get("genero", album.genero)
         db.session.commit()
         return album_schema.dump(album)
 

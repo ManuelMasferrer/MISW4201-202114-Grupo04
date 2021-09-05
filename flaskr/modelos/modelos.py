@@ -40,9 +40,14 @@ class Album(db.Model):
     anio = db.Column(db.Integer)
     descripcion = db.Column(db.String(512))
     medio = db.Column(db.Enum(Medio))
-    genero = db.Column(db.Enum(Genero))
     usuario = db.Column(db.Integer, db.ForeignKey("usuario.id"))
     canciones = db.relationship('Cancion', secondary = 'album_cancion', back_populates="albumes")
+    def cancion_interpretes(self):
+        result = map(lambda c: c.interprete, self.canciones)
+        return list(result)
+    def cancion_generos(self):
+        result = map(lambda c: c.titulo, self.canciones)
+        return list(result)
     
 class Usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -65,7 +70,8 @@ class CancionSchema(SQLAlchemyAutoSchema):
 
 class AlbumSchema(SQLAlchemyAutoSchema):
     medio = EnumADiccionario(attribute=("medio"))
-    genero = EnumADiccionario(attribute=("genero"))
+    cancion_interpretes = fields.Function(lambda obj: obj.cancion_interpretes())
+    cancion_generos = fields.Function(lambda obj: obj.cancion_generos())
     class Meta:
          model = Album
          include_relationships = True
