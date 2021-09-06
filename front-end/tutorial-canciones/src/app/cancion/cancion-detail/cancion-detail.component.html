@@ -1,10 +1,20 @@
 <div class="container">
 
   <div class="row">
-    <div class="col-12 text-center mb-2" >
+    <div class="col-12 mb-2" >
       <label class="fs-4 fw-bold">Canción: {{cancion?.titulo}}</label>
       <button *ngIf="cancion" type="button" class="btn btn-outline-success ms-3 me-2" (click)="goToEdit()" title="Editar canción"><i class="bi bi-pencil-square"></i></button>
       <button *ngIf="cancion" type="button" class="btn btn-outline-danger me-1" (click)="eliminarCancion()" title="Eliminar canción"><i class="bi bi-trash-fill"></i></button>
+
+      <div *ngIf="cancion && cancion.es_favorita; else notFavorite" (click)="changeFavorite()" class='d-inline-block float-end c-heart-icon-fill'>
+        <i class="bi bi-heart-fill"></i>
+      </div>
+
+      <ng-template #notFavorite>
+        <div class='d-inline-block float-end c-heart-icon' (click)="changeFavorite()">
+          <i class="bi bi-heart"></i>
+        </div>
+      </ng-template>
     </div>
   </div>
 

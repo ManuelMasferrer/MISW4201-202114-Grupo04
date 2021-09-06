@@ -5,7 +5,8 @@ export class Cancion {
     segundos: number;
     interprete: string;
     albumes: Array<any>;
-    genero: Genero
+    genero: Genero;
+    es_favorita: boolean;
 
     constructor(
         id: number,
@@ -14,13 +15,15 @@ export class Cancion {
         segundos: number,
         interprete: string,
         albumes: Array<any>,
+        es_favorita: boolean,
         genero: Genero
     ){
-        this.id = id,
-        this.titulo = titulo,
-        this.minutos = minutos,
-        this.segundos = segundos,
+        this.id = id
+        this.titulo = titulo
+        this.minutos = minutos
+        this.segundos = segundos
         this.interprete = interprete
+        this.es_favorita = es_favorita
         this.albumes = albumes
         this.genero = genero
     }

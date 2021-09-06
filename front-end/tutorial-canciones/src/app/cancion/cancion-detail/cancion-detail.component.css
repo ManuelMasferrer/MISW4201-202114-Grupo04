@@ -1,0 +1,10 @@
+.c-heart-icon {
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.c-heart-icon-fill {
+  font-size: 22px;
+  cursor: pointer;
+  color: #940000;
+}

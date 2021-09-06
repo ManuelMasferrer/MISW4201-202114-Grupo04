@@ -41,6 +41,14 @@ class VistaCancion(Resource):
         db.session.commit()
         return '',204
 
+class VistaCancionCambiarFavorito(Resource):
+    def put(self, id_cancion):
+        cancion = Cancion.query.get_or_404(id_cancion)
+        cancion.es_favorita = not cancion.es_favorita
+        db.session.commit()
+        return cancion_schema.dump(cancion)
+ 
+
 class VistaAlbumesCanciones(Resource):
     def get(self, id_cancion):
         cancion = Cancion.query.get_or_404(id_cancion)

@@ -24,8 +24,8 @@ export class CancionListComponent implements OnInit {
   mostrarCanciones: Array<Cancion>
   cancionSeleccionada: Cancion
   indiceSeleccionado: number = 0
-  selectedFilter:string='titulo';
-
+  selectedFilter:string='titulo'
+  processing_favorite: boolean = false
 
   ngOnInit() {
     if(!parseInt(this.router.snapshot.params.userId) || this.router.snapshot.params.userToken === " "){
@@ -84,6 +84,25 @@ export class CancionListComponent implements OnInit {
     this.mostrarCanciones = cancionesBusqueda
   }
 
+  changeFavorite() {
+    if(this.processing_favorite) {
+      return
+    }
+
+    this.processing_favorite = true
+    this.cancionService.changeFavoriteState(this.cancionSeleccionada.id)
+      .subscribe(cancion => {
+        this.processing_favorite = false
+        this.ngOnInit()
+        let message = cancion.es_favorita ? `La canción '${cancion.titulo}' fue agregada a tus favoritos` : `La canción '${cancion.titulo}' fue eliminada de tus favoritos`
+        this.toastr.success(message);
+      },
+      error=> {
+        this.showError("Ha ocurrido un error. " + error.message)
+      })
+
+  }
+
   eliminarCancion(){
     this.cancionService.eliminarCancion(this.cancionSeleccionada.id)
     .subscribe(cancion => {
@@ -111,5 +130,4 @@ export class CancionListComponent implements OnInit {
     this.selectedFilter=event.target.value;
     console.log(this.selectedFilter)
   }
-
 }

@@ -52,7 +52,7 @@
         </div>
       </div>
       <div class="col-8">
-        <app-cancion-detail (deleteCancion)="eliminarCancion()" [cancion]="cancionSeleccionada"></app-cancion-detail>
+        <app-cancion-detail (cambiarFavorito)="changeFavorite()" (deleteCancion)="eliminarCancion()" [cancion]="cancionSeleccionada"></app-cancion-detail>
       </div>
     </div>
   </div>
