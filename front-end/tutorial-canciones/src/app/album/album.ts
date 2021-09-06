@@ -7,7 +7,11 @@ export class Album {
     medio: Medio;
     usuario: number;
     interpretes: Array<string>;
-    canciones: Array<Cancion>
+    canciones: Array<Cancion>;
+    generos: Array<string>;
+    cancion_interpretes: Array<string>;
+    cancion_generos: Array<any>;
+
 
     constructor(
         id: number,
@@ -17,7 +21,10 @@ export class Album {
         medio: Medio,
         usuario: number,
         interpretes: Array<string>,
-        canciones: Array<Cancion>
+        canciones: Array<Cancion>,
+        generos: Array<string>,
+        cancion_interpretes:Array<string>,
+        cancion_generos: Array<any>
     ){
         this.id = id,
         this.titulo = titulo,
@@ -26,7 +33,10 @@ export class Album {
         this.medio = medio,
         this.usuario = usuario,
         this.interpretes = interpretes,
-        this.canciones = canciones
+        this.canciones = canciones,
+        this.generos = generos,
+        this.cancion_interpretes = cancion_interpretes,
+        this.cancion_generos = cancion_generos
     }
 }
 
@@ -41,6 +51,18 @@ export class Medio{
         this.llave = llave,
         this.valor = valor
     }
+}
+
+export class Genero{
+  llave: string;
+  valor: number
+  constructor(
+    llave: string,
+    valor: number
+  ){
+    this.llave = llave,
+    this.valor = valor
+  }
 }
 
 export class Cancion{

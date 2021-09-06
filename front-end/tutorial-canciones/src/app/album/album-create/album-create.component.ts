@@ -4,7 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AlbumService } from '../album.service';
-import { Album, Medio } from '../album';
+import { Album, Medio, Genero } from '../album';
+import { bindCallback } from 'rxjs';
 
 @Component({
   selector: 'app-album-create',
@@ -31,6 +32,29 @@ export class AlbumCreateComponent implements OnInit {
     }
   ]
 
+  generos:Array<Genero> = [
+    {
+      llave: "BACHATA",
+      valor: 1
+    },
+    {
+      llave: "BALADAS",
+      valor: 2
+    },
+    {
+      llave: "BANDA",
+      valor: 3
+    },
+    {
+      llave: "BLUES",
+      valor: 4
+    },
+    {
+      llave: "BOLERO",
+      valor: 5
+    }
+  ]
+
   constructor(
     private albumService: AlbumService,
     private formBuilder: FormBuilder,
@@ -51,7 +75,7 @@ export class AlbumCreateComponent implements OnInit {
         titulo: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
         anio: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
         descripcion: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(512)]],
-        medio: ["", [Validators.required]]
+        medio: ["", [Validators.required]],
       })
     }
   }
@@ -74,6 +98,9 @@ export class AlbumCreateComponent implements OnInit {
   }
 
   createAlbum(newAlbum: Album){
+    console.log(this.albumForm.value.genero)
+    console.log(this.albumForm.value.medio)
+
     this.albumForm.get('anio')?.setValue(parseInt(this.albumForm.get('anio')?.value))
     this.albumService.crearAlbum(this.userId, this.token, newAlbum)
     .subscribe(album => {

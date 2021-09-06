@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from "ngx-toastr";
-import { Album, Cancion } from '../album';
+import { Album, Cancion, Genero } from '../album';
 import { AlbumService } from '../album.service';
 
 @Component({
@@ -17,13 +17,16 @@ export class AlbumListComponent implements OnInit {
     private toastr: ToastrService,
     private routerPath: Router
   ) { }
-  
+
   userId: number
   token: string
   albumes: Array<Album>
   mostrarAlbumes: Array<Album>
   albumSeleccionado: Album
   indiceSeleccionado: number
+  selectedFilter:string='titulo';
+
+
 
   ngOnInit() {
     if(!parseInt(this.router.snapshot.params.userId) || this.router.snapshot.params.userToken === " "){
@@ -34,6 +37,9 @@ export class AlbumListComponent implements OnInit {
       this.token = this.router.snapshot.params.userToken
       this.getAlbumes();
     }
+
+
+
   }
 
   getAlbumes():void{
@@ -42,7 +48,20 @@ export class AlbumListComponent implements OnInit {
       this.albumes = albumes
       this.mostrarAlbumes = albumes
       if(albumes.length>0){
+        this.mostrarAlbumes.map((currentElement, index) => {
+          this.albumService.getCancionesAlbum(index+1,this.token).subscribe(canciones => {
+            currentElement.canciones = canciones
+            currentElement.interpretes = this.getInterpretes(canciones)
+            currentElement.generos = this.getGeneros(canciones)
+
+          })
+
+        })
+        console.log(this.mostrarAlbumes)
+        console.log(this.albumes)
         this.onSelect(this.mostrarAlbumes[0], 0)
+        console.log(this.mostrarAlbumes[0])
+
       }
     },
     error => {
@@ -57,7 +76,7 @@ export class AlbumListComponent implements OnInit {
         this.showError("Ha ocurrido un error. " + error.message)
       }
     })
-    
+
   }
 
   onSelect(a: Album, index: number){
@@ -67,6 +86,8 @@ export class AlbumListComponent implements OnInit {
     .subscribe(canciones => {
       this.albumSeleccionado.canciones = canciones
       this.albumSeleccionado.interpretes = this.getInterpretes(canciones)
+      this.albumSeleccionado.generos = this.getGeneros(canciones)
+      console.log(this.albumSeleccionado.generos)
     },
     error =>{
       this.showError("Ha ocurrido un error, " + error.message)
@@ -83,14 +104,56 @@ export class AlbumListComponent implements OnInit {
     return interpretes
   }
 
-  buscarAlbum(busqueda: string){
-    let albumesBusqueda: Array<Album> = []
-    this.albumes.map( albu => {
-      if( albu.titulo.toLocaleLowerCase().includes(busqueda.toLowerCase())){
-        albumesBusqueda.push(albu)
+  getGeneros(canciones: Array<any>): Array<string>{
+    var generos: Array<string> = []
+    canciones.map( c => {
+      if(!generos.includes(c.genero.llave)){
+        generos.push(c.genero.llave)
       }
     })
-    this.mostrarAlbumes = albumesBusqueda
+    return generos
+  }
+
+  hasInterprete(albu:Album, busqueda:string):Boolean{
+    let resp:boolean = false;
+    let interpreteString:string = albu.interpretes?.join(' ') || "";
+      if(interpreteString.toLocaleLowerCase().includes(busqueda.toLowerCase())){
+        resp=true
+      }
+      return resp
+  }
+
+  hasGenero(albu:Album, busqueda:string):Boolean{
+    let resp:boolean = false;
+    let interpreteString:string = albu.generos?.join(' ') || "";
+      if(interpreteString.toLocaleLowerCase().includes(busqueda.toLowerCase())){
+        resp=true
+      }
+      return resp
+  }
+
+  buscarAlbum(busqueda: string, filter = this.selectedFilter){
+
+    let albumesBusqueda: Array<Album> = []
+    this.albumes.map( albu => {
+      if (filter==='genero'){
+        if(this.hasGenero(albu,busqueda)){
+          albumesBusqueda.push(albu)
+        }
+      }
+      if (filter==='interprete'){
+        if(this.hasInterprete(albu,busqueda)){
+          albumesBusqueda.push(albu)
+        }
+      }
+
+      else{
+        if(albu.titulo.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())){
+          albumesBusqueda.push(albu)
+        }
+      }
+    })
+    this.mostrarAlbumes = albumesBusqueda.sort((a,b) => (a.titulo > b.titulo) ? 1 : ((b.titulo > a.titulo) ? -1 : 0))
   }
 
   irCrearAlbum(){
@@ -128,4 +191,12 @@ export class AlbumListComponent implements OnInit {
   showSuccess() {
     this.toastr.success(`El album fue eliminado`, "Eliminado exitosamente");
   }
+
+
+  radioChangeHandler(event:any){
+    this.selectedFilter=event.target.value;
+    console.log(this.selectedFilter)
+
+  }
+
 }

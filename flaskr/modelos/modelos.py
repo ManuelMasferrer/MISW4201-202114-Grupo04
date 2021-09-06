@@ -10,6 +10,18 @@ albumes_canciones = db.Table('album_cancion',
     db.Column('album_id', db.Integer, db.ForeignKey('album.id'), primary_key = True),
     db.Column('cancion_id', db.Integer, db.ForeignKey('cancion.id'), primary_key = True))
 
+class Medio(enum.Enum):
+   DISCO = 1
+   CASETE = 2
+   CD = 3
+
+class Genero(enum.Enum):
+   BACHATA = 1
+   BALADAS = 2
+   BANDA = 3
+   BLUES = 4
+   BOLERO = 5
+
 class Cancion(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     titulo = db.Column(db.String(128))
@@ -17,12 +29,11 @@ class Cancion(db.Model):
     segundos = db.Column(db.Integer)
     es_favorita = db.Column(db.Boolean, default = False)
     interprete = db.Column(db.String(128))
+    genero = db.Column(db.Enum(Genero))
     albumes = db.relationship('Album', secondary = 'album_cancion', back_populates="canciones")
 
-class Medio(enum.Enum):
-   DISCO = 1
-   CASETE = 2
-   CD = 3
+
+
 
 class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -32,6 +43,12 @@ class Album(db.Model):
     medio = db.Column(db.Enum(Medio))
     usuario = db.Column(db.Integer, db.ForeignKey("usuario.id"))
     canciones = db.relationship('Cancion', secondary = 'album_cancion', back_populates="albumes")
+    def cancion_interpretes(self):
+        result = map(lambda c: c.interprete, self.canciones)
+        return list(result)
+    def cancion_generos(self):
+        result = map(lambda c: c.titulo, self.canciones)
+        return list(result)
     
 class Usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -46,6 +63,7 @@ class EnumADiccionario(fields.Field):
         return {"llave": value.name, "valor": value.value}
 
 class CancionSchema(SQLAlchemyAutoSchema):
+    genero = EnumADiccionario(attribute=("genero"))
     class Meta:
          model = Cancion
          include_relationships = True
@@ -53,6 +71,8 @@ class CancionSchema(SQLAlchemyAutoSchema):
 
 class AlbumSchema(SQLAlchemyAutoSchema):
     medio = EnumADiccionario(attribute=("medio"))
+    cancion_interpretes = fields.Function(lambda obj: obj.cancion_interpretes())
+    cancion_generos = fields.Function(lambda obj: obj.cancion_generos())
     class Meta:
          model = Album
          include_relationships = True
