@@ -35,3 +35,18 @@ def test_cancion_a_favorito(client):
     rv = client.put('/cancion/'+str(nueva_cancion.id)+'/change_favorite_state')
     json_data = json.loads(rv.data)
     assert json_data['es_favorita'] ==  True
+
+def test_quitar_favorito_a_cancion(client):
+    nueva_cancion = Cancion(
+            titulo="test",
+            minutos="10",
+            segundos="30",
+            interprete="Test interprete",
+            es_favorita=True
+            )
+    db.session.add(nueva_cancion)
+    db.session.commit()
+
+    rv = client.put('/cancion/'+str(nueva_cancion.id)+'/change_favorite_state')
+    json_data = json.loads(rv.data)
+    assert json_data['es_favorita'] == False
