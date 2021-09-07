@@ -1,3 +1,23 @@
+.card-header{
+  background: #0B0C10;
+  font-family: Bodoni Bk BT;
+  font-style: normal;
+  font-weight:500;
+  /* identical to box height, or 118% */
+  text-align: left;
+  letter-spacing: 0.0025em;
+  text-transform: capitalize;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+  /* 2nd */
+  color: #FFDA8A;
+}
+
+.btn-primary {
+  color:  #0B0C10;
+  background-color:#FFDA8A;
+  border-color:#FFDA8A;
+}
+
 .btn-circle {
   width: 30px;
   height: 30px;
@@ -8,10 +28,41 @@
   border-radius: 15px;
 }
 
-.selected{
-  background-color: #ececec;
+.card-body{
+  background: #FFDA8A;
+  opacity: 0.9;
+}
+.form-check{
+  color:#0B0C10;
+
+}
+.form-check-input{
+  background-color:transparent;
+  color:#0B0C10;
+}
+.form-check-input:checked {
+  background-color:transparent;
+  border-color: #0B0C10;
+  color:#0B0C10;
 }
 
+.bi-heart-fill {
+  font-size: 15px;
+  cursor: pointer;
+  color: #0B0C10;
+  opacity: 0.6;
+}
+
+.selected{
+  background-color: #060609;
+  color:#FFCB6D;
+}
+.selected .bi-heart-fill {
+  font-size: 15px;
+  cursor: pointer;
+  color:#FFCB6D ;
+  opacity: 1;
+}
 .form-check-label{
   text-transform: capitalize;
 }
@@ -22,10 +73,3 @@
   opacity: 0.5;
 }
 
-.bi-heart-fill {
-  font-size: 15px;
-  cursor: pointer;
-  color: #940000;
-  opacity: 0.8;
-
-}
