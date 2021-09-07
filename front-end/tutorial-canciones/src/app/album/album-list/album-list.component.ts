@@ -26,6 +26,7 @@ export class AlbumListComponent implements OnInit {
   indiceSeleccionado: number
   selectedFilter:string='titulo';
   busqueda: string = '';
+  albumCancionGeneroSeleccionado: Array<any>;
 
 
 
@@ -81,14 +82,20 @@ export class AlbumListComponent implements OnInit {
   }
 
   onSelect(a: Album, index: number){
+    this.albumCancionGeneroSeleccionado = [];
     this.indiceSeleccionado = index
     this.albumSeleccionado = a
     this.albumService.getCancionesAlbum(a.id, this.token)
     .subscribe(canciones => {
+      canciones.map( x => {
+        this.albumCancionGeneroSeleccionado.push(x.genero.llave)
+      })
+
       this.albumSeleccionado.canciones = canciones
       this.albumSeleccionado.interpretes = this.getInterpretes(canciones)
       this.albumSeleccionado.generos = this.getGeneros(canciones)
       console.log(this.albumSeleccionado.generos)
+      console.log(this.albumSeleccionado.canciones)
     },
     error =>{
       this.showError("Ha ocurrido un error, " + error.message)

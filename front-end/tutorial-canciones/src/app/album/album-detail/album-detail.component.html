@@ -41,13 +41,15 @@
             <th scope="col" class="text-center">Canción</th>
             <th scope="col" class="text-center">Duración</th>
             <th scope="col" class="text-center">Intérprete</th>
+            <th scope="col" class="text-center">Genero</th>
           </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let cancion of album?.canciones" >
+            <tr *ngFor="let cancion of album?.canciones; index as i" >
               <td >{{cancion.titulo}}</td>
               <td class="text-center">{{cancion.minutos}}:{{cancion.segundos}}</td>
               <td >{{cancion.interprete}}</td>
+              <td >{{cancionGeneroSeleccionado[i]}}</td>
             </tr>
         </tbody>
       </table>
