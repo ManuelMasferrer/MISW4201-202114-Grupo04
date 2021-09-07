@@ -26,6 +26,7 @@ export class CancionListComponent implements OnInit {
   indiceSeleccionado: number = 0
   selectedFilter:string='titulo'
   processing_favorite: boolean = false
+  busqueda: string = '';
 
   ngOnInit() {
     if(!parseInt(this.router.snapshot.params.userId) || this.router.snapshot.params.userToken === " "){
@@ -69,12 +70,13 @@ export class CancionListComponent implements OnInit {
   }
 
   buscarCancion(busqueda: string, filter = this.selectedFilter){
+    this.busqueda = busqueda;
     let cancionesBusqueda: Array<Cancion> = []
     this.canciones.map( cancion => {
       if (filter==='interprete'){
         if(cancion.interprete?.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())){
           cancionesBusqueda.push(cancion)
-        }   
+        }
       }
       else if (filter==='genero'){
         if(cancion.genero.llave?.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())){
@@ -136,6 +138,7 @@ export class CancionListComponent implements OnInit {
 
   radioChangeHandler(event:any){
     this.selectedFilter=event.target.value;
+    this.buscarCancion(this.busqueda);
     console.log(this.selectedFilter)
   }
 }

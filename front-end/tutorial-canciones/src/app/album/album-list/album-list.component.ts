@@ -134,7 +134,7 @@ export class AlbumListComponent implements OnInit {
   }
 
   buscarAlbum(busqueda:string , filter = this.selectedFilter){
-    this.busqueda = busqueda
+    this.busqueda = busqueda;
     let albumesBusqueda: Array<Album> = []
     this.albumes.map( albu => {
       if (filter==='genero'){
