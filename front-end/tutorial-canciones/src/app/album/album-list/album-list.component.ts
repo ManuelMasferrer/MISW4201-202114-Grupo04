@@ -141,7 +141,7 @@ export class AlbumListComponent implements OnInit {
           albumesBusqueda.push(albu)
         }
       }
-      if (filter==='interprete'){
+      else if (filter==='interprete'){
         if(this.hasInterprete(albu,busqueda)){
           albumesBusqueda.push(albu)
         }
