@@ -25,6 +25,7 @@ export class AlbumListComponent implements OnInit {
   albumSeleccionado: Album
   indiceSeleccionado: number
   selectedFilter:string='titulo';
+  busqueda: string = '';
 
 
 
@@ -132,8 +133,8 @@ export class AlbumListComponent implements OnInit {
       return resp
   }
 
-  buscarAlbum(busqueda: string, filter = this.selectedFilter){
-
+  buscarAlbum(busqueda:string , filter = this.selectedFilter){
+    this.busqueda = busqueda
     let albumesBusqueda: Array<Album> = []
     this.albumes.map( albu => {
       if (filter==='genero'){
@@ -196,6 +197,7 @@ export class AlbumListComponent implements OnInit {
   radioChangeHandler(event:any){
     this.selectedFilter=event.target.value;
     console.log(this.selectedFilter)
+    this.buscarAlbum(this.busqueda)
 
   }
 
