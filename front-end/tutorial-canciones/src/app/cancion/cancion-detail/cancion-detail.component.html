@@ -11,7 +11,7 @@
       </div>
 
       <ng-template #notFavorite>
-        <div class='d-inline-block float-end c-heart-icon' (click)="changeFavorite()">
+        <div *ngIf="cancion" class='d-inline-block float-end c-heart-icon' (click)="changeFavorite()">
           <i class="bi bi-heart"></i>
         </div>
       </ng-template>
@@ -23,6 +23,7 @@
       <div class="card">
         <div class="card-body">
           <p class="my-0"><span class="fw-bold">Duración: </span> <span class="text-capitalize">{{cancion?.minutos}}:{{cancion?.segundos}}</span></p>
+          <p class="my-0"><span class="fw-bold">Género: </span> <span class="text-capitalize">{{cancion?.genero?.llave}}</span></p>
         </div>
       </div>
     </div>

@@ -15,3 +15,14 @@
 .form-check-label{
   text-transform: capitalize;
 }
+
+.bi-heart {
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.bi-heart-fill {
+  font-size: 15px;
+  cursor: pointer;
+  color: #940000;
+}
