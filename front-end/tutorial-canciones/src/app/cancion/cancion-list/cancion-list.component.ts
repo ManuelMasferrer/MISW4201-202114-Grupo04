@@ -89,7 +89,7 @@ export class CancionListComponent implements OnInit {
         }
       }
     })
-    this.mostrarCanciones = cancionesBusqueda
+    this.mostrarCanciones = cancionesBusqueda.sort((a)=>a.es_favorita===true?-1:1)
   }
 
   changeFavorite() {
