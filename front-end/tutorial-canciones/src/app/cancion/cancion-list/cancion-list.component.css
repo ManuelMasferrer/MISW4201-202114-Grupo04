@@ -19,10 +19,13 @@
 .bi-heart {
   font-size: 15px;
   cursor: pointer;
+  opacity: 0.5;
 }
 
 .bi-heart-fill {
   font-size: 15px;
   cursor: pointer;
   color: #940000;
+  opacity: 0.8;
+
 }

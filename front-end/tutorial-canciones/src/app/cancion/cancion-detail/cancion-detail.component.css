@@ -2,9 +2,22 @@
   font-size: 24px;
   cursor: pointer;
 }
+.c-heart-icon:hover{
+  filter: drop-shadow(3px 3px 2px rgb(0 0 0 / 0.4));
+  font-size: 28px;
+  transition: 0.3s;
+  opacity: 1;
+  
+}
 
 .c-heart-icon-fill {
   font-size: 25px;
   cursor: pointer;
   color: #940000;
 }
+.c-heart-icon-fill:hover{
+  filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+  font-size: 28px;
+  transition: 0.3s;
+}
+
