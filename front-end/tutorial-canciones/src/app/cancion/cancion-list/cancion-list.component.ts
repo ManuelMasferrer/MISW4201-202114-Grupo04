@@ -44,7 +44,13 @@ export class CancionListComponent implements OnInit {
       // if(canciones.length > 0){
       this.canciones = canciones
       this.mostrarCanciones = canciones
-      this.onSelect(this.mostrarCanciones[0], 0)
+      let cancionDefault: any = this.mostrarCanciones[0]
+      let defaultIndex: number = 0
+      if(this.cancionSeleccionada) {
+        cancionDefault = canciones.find(e => e.id == this.cancionSeleccionada.id)
+        defaultIndex = this.canciones.findIndex(e => e.id == cancionDefault.id)
+      }
+      this.onSelect(cancionDefault, defaultIndex)
     // }
     })
   }
@@ -92,6 +98,8 @@ export class CancionListComponent implements OnInit {
     this.processing_favorite = true
     this.cancionService.changeFavoriteState(this.cancionSeleccionada.id)
       .subscribe(cancion => {
+
+    console.log(this.cancionSeleccionada)
         this.processing_favorite = false
         this.ngOnInit()
         let message = cancion.es_favorita ? `La canción '${cancion.titulo}' fue agregada a tus favoritos` : `La canción '${cancion.titulo}' fue eliminada de tus favoritos`
