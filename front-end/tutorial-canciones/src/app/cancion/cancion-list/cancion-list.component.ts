@@ -21,6 +21,7 @@ export class CancionListComponent implements OnInit {
   userId: number
   token: string
   canciones: Array<Cancion>
+  listaCanciones: Array<Cancion>
   mostrarCanciones: Array<Cancion>
   cancionSeleccionada: Cancion
   indiceSeleccionado: number = 0
@@ -43,9 +44,20 @@ export class CancionListComponent implements OnInit {
     this.cancionService.getCanciones()
     .subscribe(canciones => {
       // if(canciones.length > 0){
-      this.canciones = canciones
-      function comparar (a: Cancion, b:Cancion){return Number(b.es_favorita) - Number(a.es_favorita);}
-      this.mostrarCanciones = canciones.sort( comparar)
+        this.canciones = canciones
+        function alfa (a: Cancion, b:Cancion) {
+          if (a.titulo > b.titulo) {
+            return 1;
+          }
+          if (a.titulo < b.titulo) {
+            return -1;
+          }
+          // a must be equal to b
+          return 0;
+        }
+        this.listaCanciones = canciones.sort( alfa )
+        function comparar (a: Cancion, b:Cancion){return Number(b.es_favorita) - Number(a.es_favorita);}
+        this.mostrarCanciones = this.listaCanciones.sort ( comparar )
       let cancionDefault: any = this.mostrarCanciones[0]
       let defaultIndex: number = 0
       if(this.cancionSeleccionada) {
