@@ -55,7 +55,7 @@
   color:#0B0C10;
 }
 
-.table{
+.table {
   border-color: transparent;
 }
 
@@ -70,6 +70,12 @@
   background-color: #060609;
   color:#FFCB6D;
 }
+
+.selected:hover{
+  color:#FFCB6D;
+  opacity: 0.9;
+}
+
 .selected .bi-heart-fill {
   font-size: 15px;
   cursor: pointer;
