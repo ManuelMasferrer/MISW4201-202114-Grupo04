@@ -44,7 +44,8 @@ export class CancionListComponent implements OnInit {
     .subscribe(canciones => {
       // if(canciones.length > 0){
       this.canciones = canciones
-      this.mostrarCanciones = canciones
+      function comparar (a: Cancion, b:Cancion){return Number(b.es_favorita) - Number(a.es_favorita);}
+      this.mostrarCanciones = canciones.sort( comparar)
       let cancionDefault: any = this.mostrarCanciones[0]
       let defaultIndex: number = 0
       if(this.cancionSeleccionada) {
@@ -55,6 +56,8 @@ export class CancionListComponent implements OnInit {
     // }
     })
   }
+
+
 
   onSelect(cancion: Cancion, indice: number){
     this.indiceSeleccionado = indice
