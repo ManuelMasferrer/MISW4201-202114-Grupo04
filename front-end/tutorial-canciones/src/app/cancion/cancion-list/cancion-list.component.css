@@ -31,6 +31,15 @@
 .card-body{
   background: #FFDA8A;
   opacity: 0.9;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.0025em;
+  text-transform: capitalize;
+  font-feature-settings: 'pnum' on, 'lnum' on, 'kern' off;
+  color: rgba(11, 12, 16, 0.6) ;
 }
 .form-check{
   color:#0B0C10;
@@ -41,9 +50,13 @@
   color:#0B0C10;
 }
 .form-check-input:checked {
-  background-color:transparent;
+  background-color:rgba(11, 12, 16, 0.6);
   border-color: #0B0C10;
   color:#0B0C10;
+}
+
+.table{
+  border-color: transparent;
 }
 
 .bi-heart-fill {

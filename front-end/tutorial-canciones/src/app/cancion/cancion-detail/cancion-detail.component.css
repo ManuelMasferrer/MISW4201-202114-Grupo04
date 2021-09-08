@@ -1,3 +1,20 @@
+.title{
+font-family: Bodoni Bk BT;
+font-style: normal;
+font-weight: normal;
+text-transform: capitalize;
+font-feature-settings: 'pnum' on, 'lnum' on;
+/* 1st */
+color: #0B0C10;
+}
+.title-span{
+letter-spacing: 0.0025em;
+/* 1st_Dark */
+color: #060609;
+opacity: 0.7;
+}
+
+
 .c-heart-icon {
   font-size: 24px;
   cursor: pointer;
@@ -7,17 +24,18 @@
   font-size: 28px;
   transition: 0.3s;
   opacity: 1;
-  
+
 }
 
 .c-heart-icon-fill {
   font-size: 25px;
   cursor: pointer;
-  color: #940000;
+  color: #0B0C10;
 }
 .c-heart-icon-fill:hover{
   filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
   font-size: 28px;
   transition: 0.3s;
 }
+
 
