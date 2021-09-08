@@ -4,7 +4,7 @@ import tempfile
 import pytest
 from flask import json
 
-from ..app import app, db, Cancion
+from ..app import app, db, Cancion, Usuario, Album
 
 @pytest.fixture
 def client():
@@ -20,6 +20,22 @@ def client():
 
     os.close(db_fd)
     os.unlink(app.config['DATABASE'])
+
+@pytest.fixture
+def sign_in(client):
+    nuevo_usuario = Usuario(
+            nombre='test_user',
+            contrasena='test_user'
+            )
+    db.session.add(nuevo_usuario)
+    db.session.commit()
+    response = client.post(
+            '/logIn',
+            data=json.dumps({"nombre": nuevo_usuario.nombre, "contrasena": nuevo_usuario.contrasena}),
+            headers={"Content-Type": "application/json"},
+            )
+    json_data = json.loads(response.data)
+    return {"user": nuevo_usuario, "token": json_data["token"]}
 
 def test_cancion_a_favorito(client):
     nueva_cancion = Cancion(
@@ -142,3 +158,85 @@ def test_listar_canciones(client):
 
     Cancion.query.delete()
     db.session.commit()
+
+def test_crear_album_with_correct_access_token(client, sign_in):
+    sign_in_data = sign_in
+    user = sign_in_data["user"]
+    headers = {
+            "Authorization": "Bearer {}".format(sign_in_data["token"]),
+            "Content-Type": "application/json"
+            }
+
+    data = {
+            "titulo":"test",
+            "anio":"2020",
+            "descripcion":"Test descripcion",
+            "medio":"DISCO"
+            }
+
+    response = rv = client.post(
+                '/usuario/'+str(user.id)+'/albumes',
+                data=json.dumps(data),
+                headers=headers,
+                )
+
+    json_data = json.loads(rv.data)
+    assert json_data["id"] == user.albumes[0].id
+
+    Usuario.query.delete()
+    Album.query.delete()
+    db.session.commit()
+
+def test_crear_album_with_incorrect_access_token(client, sign_in):
+    sign_in_data = sign_in
+    user = sign_in_data["user"]
+    headers = {
+            "Authorization": "Bearer {}".format("abc"),
+            "Content-Type": "application/json"
+            }
+
+    data = {
+            "titulo":"test",
+            "anio":"2020",
+            "descripcion":"Test descripcion",
+            "medio":"DISCO"
+            }
+
+    response = rv = client.post(
+                '/usuario/'+str(user.id)+'/albumes',
+                data=json.dumps(data),
+                headers=headers,
+                )
+
+    json_data = json.loads(rv.data)
+    assert json_data['msg'] == 'Not enough segments'
+
+    Usuario.query.delete()
+    Album.query.delete()
+    db.session.commit()
+
+def test_get_user_albums(client, sign_in):
+    sign_in_data = sign_in
+    user = sign_in_data["user"]
+    headers = {
+            "Authorization": "Bearer {}".format(sign_in_data["token"]),
+            "Content-Type": "application/json"
+            }
+    nuevo_album = Album(
+            titulo="Abc",
+            anio="2020",
+            descripcion="Descripcion",
+            medio="DISCO"
+            )
+
+    user.albumes.append(nuevo_album) 
+    db.session.commit()
+
+    response = rv = client.get(
+                '/usuario/'+str(user.id)+'/albumes',
+                headers=headers,
+                )
+
+    json_data = json.loads(rv.data)
+
+    assert json_data[0]["titulo"] == nuevo_album.titulo

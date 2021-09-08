@@ -32,9 +32,6 @@ class Cancion(db.Model):
     genero = db.Column(db.Enum(Genero))
     albumes = db.relationship('Album', secondary = 'album_cancion', back_populates="canciones")
 
-
-
-
 class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     titulo = db.Column(db.String(128))
