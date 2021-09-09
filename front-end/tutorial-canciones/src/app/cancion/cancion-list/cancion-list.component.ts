@@ -52,12 +52,11 @@ export class CancionListComponent implements OnInit {
           if (a.titulo < b.titulo) {
             return -1;
           }
-          // a must be equal to b
           return 0;
         }
         this.listaCanciones = canciones.sort( alfa )
-        function comparar (a: Cancion, b:Cancion){return Number(b.es_favorita) - Number(a.es_favorita);}
-        this.mostrarCanciones = this.listaCanciones.sort ( comparar )
+        function compararFav (a: Cancion, b:Cancion){return Number(b.es_favorita) - Number(a.es_favorita);}
+        this.mostrarCanciones = this.listaCanciones.sort ( compararFav )
       let cancionDefault: any = this.mostrarCanciones[0]
       let defaultIndex: number = 0
       if(this.cancionSeleccionada) {

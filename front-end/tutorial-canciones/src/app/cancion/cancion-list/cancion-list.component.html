@@ -42,7 +42,8 @@
               <tbody>
                       <tr class="cursor-pointer  mb-12" *ngFor="let cancion of mostrarCanciones; index as i" (click)="onSelect(cancion, i)" [ngClass]="{'selected': i === indiceSeleccionado}">
                         <td>{{cancion.titulo}}</td>
-                        <td class="text-end">{{cancion.minutos}}:{{cancion.segundos}}</td>
+                        <td *ngIf="cancion.segundos<10" class="text-end">{{cancion.minutos}}:0{{cancion.segundos}}</td>
+                        <td *ngIf="cancion.segundos>9" class="text-end">{{cancion.minutos}}:{{cancion.segundos}}</td>
                         <td class="text-end">
                           <i *ngIf="cancion.es_favorita" class="bi bi-heart-fill"></i>
                         </td>
