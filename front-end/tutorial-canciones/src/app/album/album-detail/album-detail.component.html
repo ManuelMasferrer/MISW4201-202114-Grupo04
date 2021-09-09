@@ -47,7 +47,8 @@
         <tbody>
             <tr *ngFor="let cancion of album?.canciones; index as i" >
               <td >{{cancion.titulo}}</td>
-              <td class="text-center">{{cancion.minutos}}:{{cancion.segundos}}</td>
+              <td *ngIf="cancion.segundos<10" class="text-center">{{cancion.minutos}}:0{{cancion.segundos}}</td>
+              <td *ngIf="cancion.segundos>9" class="text-center">{{cancion.minutos}}:{{cancion.segundos}}</td>
               <td >{{cancion.interprete}}</td>
               <td >{{cancionGeneroSeleccionado[i]}}</td>
             </tr>
