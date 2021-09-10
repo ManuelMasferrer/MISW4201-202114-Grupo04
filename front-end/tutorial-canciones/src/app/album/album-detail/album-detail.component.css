@@ -1,0 +1,15 @@
+.title{
+  font-family: Bodoni Bk BT;
+  font-style: normal;
+  font-weight: normal;
+  text-transform: capitalize;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+  /* 1st */
+  color: #0B0C10;
+  }
+  .title-span{
+  letter-spacing: 0.0025em;
+  /* 1st_Dark */
+  color: #060609;
+  opacity: 0.7;
+  }
