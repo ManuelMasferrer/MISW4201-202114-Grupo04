@@ -56,7 +56,7 @@ export class CancionListComponent implements OnInit {
         }
       this.listaCanciones = canciones.sort( alfa )
       function compararFav (a: Cancion, b:Cancion){return Number(b.es_favorita) - Number(a.es_favorita);}
-      this.mostrarCanciones = this.listaCanciones.sort ( compararFav )
+      this.mostrarCanciones = this.listaCanciones.sort( compararFav )
       let cancionDefault: any = this.mostrarCanciones[0]
       let defaultIndex: number = 0
       if(this.cancionSeleccionada) {
@@ -103,7 +103,19 @@ export class CancionListComponent implements OnInit {
         }
       }
     })
-    // this.mostrarCanciones = cancionesBusqueda.sort((a)=>a.es_favorita===true?-1:1)
+    function alfa (a: Cancion, b:Cancion) {
+      if (a.titulo > b.titulo) {
+        return 1;
+      }
+      if (a.titulo < b.titulo) {
+        return -1;
+      }
+      return 0;
+    }
+    this.listaCanciones = cancionesBusqueda.sort(alfa)
+    // this.mostrarCanciones = this.listaCanciones.sort((a)=>a.es_favorita===true?-1:1)
+    function compararFav (a: Cancion, b:Cancion){return Number(b.es_favorita) - Number(a.es_favorita);}
+    this.mostrarCanciones = this.listaCanciones.sort(compararFav)
   }
 
   changeFavorite() {
