@@ -77,4 +77,5 @@
   }
   .form-check-label{
     text-transform: capitalize;
+    cursor: pointer;
   }

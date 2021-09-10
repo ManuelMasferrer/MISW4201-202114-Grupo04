@@ -88,6 +88,7 @@
 }
 .form-check-label{
   text-transform: capitalize;
+  cursor: pointer;
 }
 
 .bi-heart {
